@@ -1,10 +1,318 @@
-
-<!DOCTYPE html>
-<html>
-<head>
-  <title>Rosarum Titana</title>
-</head>
-<body>
-  <h1>Rosarum Titana</h1>
-</body>
-</html>
+diff --git a/index.html b/index.html
+index f0508ed7b28938c75b771c589d7763ea56e53f72..b217390ef30a38b39412e3e24fe1eafd8cc03901 100644
+--- a/index.html
++++ b/index.html
+@@ -1,10 +1,309 @@
+-
+ <!DOCTYPE html>
+-<html>
++<html lang="en">
+ <head>
+-  <title>Rosarum Titana</title>
++  <meta charset="UTF-8" />
++  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
++  <title>ROSARUM TITANA</title>
++  <style>
++    :root {
++      --bg-deep: #090909;
++      --bg-mid: #1a1a1a;
++      --metal-light: #b8b8b8;
++      --metal-mid: #7f7f7f;
++      --metal-dark: #2f2f2f;
++      --rose-shadow: rgba(0, 0, 0, 0.45);
++      --text-glow: rgba(215, 215, 215, 0.35);
++      --accent-glow: rgba(240, 240, 240, 0.55);
++    }
++
++    * {
++      box-sizing: border-box;
++      margin: 0;
++      padding: 0;
++    }
++
++    body {
++      font-family: "Georgia", "Times New Roman", serif;
++      min-height: 100vh;
++      overflow: hidden;
++      color: #f1f1f1;
++      background: radial-gradient(circle at 20% 10%, #2a2a2a 0%, transparent 45%),
++                  radial-gradient(circle at 80% 80%, #222 0%, transparent 50%),
++                  linear-gradient(145deg, var(--bg-mid) 0%, var(--bg-deep) 50%, #141414 100%);
++    }
++
++    .scene {
++      position: relative;
++      height: 100vh;
++      width: 100%;
++      display: grid;
++      grid-template-rows: auto 1fr;
++      align-items: center;
++      justify-items: center;
++      isolation: isolate;
++    }
++
++    .texture-layer,
++    .engraved-layer,
++    .vignette-layer {
++      position: absolute;
++      inset: 0;
++      pointer-events: none;
++    }
++
++    .texture-layer {
++      background-image:
++        repeating-linear-gradient(
++          35deg,
++          rgba(255, 255, 255, 0.025) 0px,
++          rgba(255, 255, 255, 0.025) 1px,
++          transparent 1px,
++          transparent 4px
++        ),
++        repeating-linear-gradient(
++          -28deg,
++          rgba(0, 0, 0, 0.18) 0px,
++          rgba(0, 0, 0, 0.18) 2px,
++          transparent 2px,
++          transparent 8px
++        );
++      mix-blend-mode: overlay;
++      opacity: 0.55;
++      transform: translateZ(0);
++    }
++
++    .engraved-layer {
++      background-image:
++        radial-gradient(circle at 20% 25%, transparent 0 32px, rgba(168, 168, 168, 0.085) 34px 36px, transparent 39px),
++        radial-gradient(circle at 23% 28%, transparent 0 18px, rgba(0, 0, 0, 0.26) 20px 22px, transparent 26px),
++        radial-gradient(circle at 70% 40%, transparent 0 30px, rgba(168, 168, 168, 0.07) 32px 34px, transparent 37px),
++        radial-gradient(circle at 73% 42%, transparent 0 17px, rgba(0, 0, 0, 0.2) 19px 21px, transparent 24px),
++        radial-gradient(circle at 42% 72%, transparent 0 34px, rgba(168, 168, 168, 0.08) 36px 38px, transparent 42px),
++        radial-gradient(circle at 45% 74%, transparent 0 20px, rgba(0, 0, 0, 0.22) 22px 24px, transparent 27px);
++      background-size: 360px 360px;
++      opacity: 0.45;
++      filter: contrast(108%);
++      transform: translate3d(0, 0, 0);
++    }
++
++    .vignette-layer {
++      background: radial-gradient(circle at center, transparent 35%, rgba(0, 0, 0, 0.6) 100%);
++      opacity: 0.95;
++      z-index: 1;
++    }
++
++    header {
++      position: relative;
++      z-index: 2;
++      margin-top: 2.2rem;
++      text-align: center;
++      animation: fadeIn 2.2s ease forwards;
++      opacity: 0;
++    }
++
++    .title-wrap {
++      position: relative;
++      display: inline-flex;
++      align-items: center;
++      gap: 0.8rem;
++      padding: 0.45rem 1.2rem;
++      border: 1px solid rgba(192, 192, 192, 0.2);
++      border-radius: 999px;
++      background: linear-gradient(to bottom, rgba(85, 85, 85, 0.25), rgba(22, 22, 22, 0.22));
++      box-shadow: inset 0 1px 3px rgba(255, 255, 255, 0.12), 0 8px 24px rgba(0, 0, 0, 0.45);
++    }
++
++    .peacock {
++      font-size: 1.6rem;
++      line-height: 1;
++      background: linear-gradient(130deg, #dadada 0%, #878787 40%, #f1f1f1 70%, #616161 100%);
++      -webkit-background-clip: text;
++      background-clip: text;
++      color: transparent;
++      filter: drop-shadow(0 0 6px rgba(255, 255, 255, 0.14));
++      animation: shimmer 5s linear infinite;
++    }
++
++    h1 {
++      letter-spacing: 0.35rem;
++      font-size: clamp(1.15rem, 2vw, 1.8rem);
++      font-weight: 600;
++      text-transform: uppercase;
++      color: #d5d5d5;
++      text-shadow: 0 1px 0 #111, 0 0 12px rgba(255, 255, 255, 0.12);
++    }
++
++    main {
++      position: relative;
++      z-index: 2;
++      text-align: center;
++      display: grid;
++      place-items: center;
++      gap: 1.6rem;
++      padding: 1rem;
++      transform: translateY(-2vh);
++      animation: fadeIn 2.4s ease 0.4s forwards;
++      opacity: 0;
++    }
++
++    .message {
++      display: grid;
++      gap: 0.75rem;
++      text-shadow: 0 0 8px var(--text-glow);
++      animation: breathe 7s ease-in-out infinite;
++    }
++
++    .message p {
++      font-size: clamp(1.25rem, 2.5vw, 2rem);
++      letter-spacing: 0.08rem;
++      color: #ececec;
++      font-weight: 500;
++    }
++
++    .enter-btn {
++      margin-top: 0.8rem;
++      padding: 0.82rem 2.35rem;
++      font-size: 1rem;
++      letter-spacing: 0.13rem;
++      text-transform: uppercase;
++      border: 1px solid rgba(208, 208, 208, 0.45);
++      border-radius: 999px;
++      color: #f4f4f4;
++      cursor: pointer;
++      background: linear-gradient(160deg, #626262 0%, #3f3f3f 45%, #7a7a7a 80%, #2c2c2c 100%);
++      box-shadow: inset 0 1px 4px rgba(255, 255, 255, 0.25),
++                  inset 0 -4px 8px rgba(0, 0, 0, 0.35),
++                  0 6px 20px rgba(0, 0, 0, 0.55);
++      transition: transform 0.35s ease, box-shadow 0.35s ease, filter 0.35s ease;
++      animation: float 6s ease-in-out infinite;
++    }
++
++    .enter-btn::before {
++      content: "";
++      position: absolute;
++      inset: 2px;
++      border-radius: inherit;
++      pointer-events: none;
++    }
++
++    .enter-btn:hover {
++      transform: translateY(-2px) scale(1.02);
++      box-shadow: inset 0 1px 4px rgba(255, 255, 255, 0.35),
++                  inset 0 -4px 8px rgba(0, 0, 0, 0.4),
++                  0 0 22px var(--accent-glow),
++                  0 8px 24px rgba(0, 0, 0, 0.6);
++      filter: brightness(1.05);
++    }
++
++    .enter-btn:active {
++      transform: translateY(1px) scale(0.995);
++    }
++
++    @keyframes fadeIn {
++      from {
++        opacity: 0;
++        transform: translateY(10px);
++      }
++      to {
++        opacity: 1;
++        transform: translateY(0);
++      }
++    }
++
++    @keyframes breathe {
++      0%,
++      100% {
++        transform: translateY(0px);
++        opacity: 0.94;
++      }
++      50% {
++        transform: translateY(-5px);
++        opacity: 1;
++      }
++    }
++
++    @keyframes float {
++      0%,
++      100% {
++        transform: translateY(0px);
++      }
++      50% {
++        transform: translateY(-4px);
++      }
++    }
++
++    @keyframes shimmer {
++      0% {
++        filter: drop-shadow(0 0 4px rgba(255, 255, 255, 0.1));
++      }
++      50% {
++        filter: drop-shadow(0 0 9px rgba(255, 255, 255, 0.26));
++      }
++      100% {
++        filter: drop-shadow(0 0 4px rgba(255, 255, 255, 0.1));
++      }
++    }
++
++    @media (max-width: 640px) {
++      .title-wrap {
++        gap: 0.5rem;
++        padding: 0.35rem 0.85rem;
++      }
++
++      h1 {
++        letter-spacing: 0.2rem;
++      }
++
++      .peacock {
++        font-size: 1.35rem;
++      }
++    }
++  </style>
+ </head>
+ <body>
+-  <h1>Rosarum Titana</h1>
++  <div class="scene" id="scene">
++    <div class="texture-layer" id="textureLayer"></div>
++    <div class="engraved-layer" id="engravedLayer"></div>
++    <div class="vignette-layer"></div>
++
++    <header>
++      <div class="title-wrap">
++        <span class="peacock" aria-hidden="true">🦚</span>
++        <h1>ROSARUM TITANA</h1>
++      </div>
++    </header>
++
++    <main>
++      <div class="message">
++        <p>We have been waiting for you.</p>
++        <p>You seem ready for a change.</p>
++      </div>
++      <button class="enter-btn" id="enterBtn" type="button">Enter</button>
++    </main>
++  </div>
++
++  <script>
++    const scene = document.getElementById("scene");
++    const textureLayer = document.getElementById("textureLayer");
++    const engravedLayer = document.getElementById("engravedLayer");
++    const enterButton = document.getElementById("enterBtn");
++
++    scene.addEventListener("mousemove", (event) => {
++      const x = (event.clientX / window.innerWidth - 0.5) * 10;
++      const y = (event.clientY / window.innerHeight - 0.5) * 10;
++
++      textureLayer.style.transform = `translate(${x * -0.4}px, ${y * -0.4}px) scale(1.03)`;
++      engravedLayer.style.transform = `translate(${x * -0.8}px, ${y * -0.8}px) scale(1.02)`;
++    });
++
++    scene.addEventListener("mouseleave", () => {
++      textureLayer.style.transform = "translate(0, 0) scale(1)";
++      engravedLayer.style.transform = "translate(0, 0) scale(1)";
++    });
++
++    enterButton.addEventListener("click", () => {
++      window.location.href = "selection.html";
++    });
++  </script>
+ </body>
+ </html>
